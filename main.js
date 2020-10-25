@@ -12,7 +12,7 @@ $(function () {
             tags.push({name: tagName, value: tagValue});
         });
 
-        items.push({tags: tags});
+        items.push({tags: tags, serial: serial(tags)});
     });
 
     function groupBy(items, tagName) {
@@ -28,6 +28,22 @@ $(function () {
         });
 
         return groups;
+    }
+
+    function serial(tags) {
+        return getTagString(tags, "series") + "-" + getTagString(tags, "number");
+    }
+
+    function sortGroup(group) {
+        group.sort(function (a, b) {
+            return a.serial > b.serial ? 1 : -1;
+        });
+    }
+
+    function sortGroups(groups) {
+        Object.keys(groups).forEach(function (groupName) {
+            sortGroup(groups[groupName]);
+        });
     }
 
     function tagValues(tags, tagName) {
@@ -86,6 +102,7 @@ $(function () {
 
     function groupAction(tagName) {
         var groups = groupBy(items, tagName);
+        sortGroups(groups);
         render(groups);
     }
 

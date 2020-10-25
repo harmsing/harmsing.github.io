@@ -57,7 +57,7 @@ $(function () {
     }
 
     function getTagString(tags, tagName) {
-        return tagValues(tags, tagName).join(", ");
+        return tagValues(tags, tagName).join(", ");
     }
 
     function render(groups) {

@@ -44,10 +44,10 @@ $(function () {
             groups[groupName].forEach(function (item) {
                 item.tags.forEach(function (tag) {
                     if (tag.name === "image") {
-                        var $image = $('<a href="" target="_blank"><img src="" alt=""></a>');
+                        var $image = $('<a href=""><img src="" alt=""></a>');
                         var previewUrl = "images/" + tag.value + "_.jpg";
                         var fullSizeUrl = "images/" + tag.value + ".jpg";
-                        $image.attr("href", fullSizeUrl);
+                        $image.attr("href", fullSizeUrl).attr("data-fancybox", groupName);
                         $image.find("img").attr("src", previewUrl);
 
                         $images.append($image);

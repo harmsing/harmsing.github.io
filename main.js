@@ -30,8 +30,23 @@ $(function () {
         return groups;
     }
 
+    function tagValues(tags, tagName) {
+        var values = [];
+        tags.forEach(function (tag) {
+            if (tag.name === tagName) {
+                values.push(tag.value);
+            }
+        });
+        return values;
+    }
+
+    function getTagString(tags, tagName) {
+        return tagValues(tags, tagName).join(", ");
+    }
+
     function render(groups) {
         var $gallery = $("#gallery").empty();
+        var $tableBody = $("#table_view_body").empty();
 
         var groupNames = Object.keys(groups).sort();
 
@@ -40,6 +55,8 @@ $(function () {
             $group.find("h3").html(groupName);
 
             var $images = $group.find(".images");
+
+            $tableBody.append('<tr><th colspan="6">' + groupName + '</th></tr>')
 
             groups[groupName].forEach(function (item) {
                 item.tags.forEach(function (tag) {
@@ -53,6 +70,14 @@ $(function () {
                         $images.append($image);
                     }
                 });
+
+                var cells = ["series", "number", "year", "case-type", "n-games", "game"].map(function (tagName) {
+                    return "<td>" + getTagString(item.tags, tagName) + "</td>";
+                }).join("");
+
+                var row = "<tr>" + cells + "</tr>";
+
+                $tableBody.append(row);
             });
 
             $gallery.append($group);
@@ -67,4 +92,14 @@ $(function () {
     $("#group_by").change(function () {
         groupAction($(this).val());
     }).change();
+
+    $("[name=view]").change(function () {
+        if ($("[name=view]:checked").val() === "gallery") {
+            $("#gallery").show();
+            $("#table").hide();
+        } else {
+            $("#gallery").hide();
+            $("#table").show();
+        }
+    });
 });

@@ -36,7 +36,7 @@ $(function () {
         var groupNames = Object.keys(groups).sort();
 
         groupNames.forEach(function (groupName) {
-            var $group = $('<div class="group"><h3></h3><div class="images" style="margin-left: -15px; margin-right: -15px;"></div></div>');
+            var $group = $('<div class="group"><h3 class="mt-3"></h3><div class="images" style="margin-left: -15px; margin-right: -15px;"></div></div>');
             $group.find("h3").html(groupName);
 
             var $images = $group.find(".images");
